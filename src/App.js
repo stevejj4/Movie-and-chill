@@ -51,24 +51,30 @@ const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 function Navbar(){
-  const [query, setQuery] = useState("");
   return(
     <nav className="nav-bar">
         <div className="logo">
           <span role="img">🍿</span>
           <h1>Movie & Chill</h1>
         </div>
-        <input
+        <Search />
+        <p className="num-results">
+          Found <strong>X</strong> results
+        </p>
+      </nav>
+  );
+}
+
+function Search(){
+  const [query, setQuery] = useState("");
+  return(
+    <input
           className="search"
           type="text"
           placeholder="Search movies..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <p className="num-results">
-          Found <strong>X</strong> results
-        </p>
-      </nav>
   );
 }
 
