@@ -50,6 +50,7 @@ const tempWatchedData = [
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
+// App is a structural Components
 export default function App() {
 
   return (
@@ -59,7 +60,7 @@ export default function App() {
     </>
   );
 }
-
+// Navbar is a structural Components
 function Navbar(){
   return(
     <nav className="nav-bar">
@@ -69,6 +70,7 @@ function Navbar(){
       </nav>
   );
 }
+// Logo is presenational component because it only renders the logo and does not manage any state or logic.
 function Logo(){
   return (
     <div className="logo">
@@ -78,6 +80,7 @@ function Logo(){
   );
 }
 
+// search is a stateful component because it manages the state of the search query and updates it based on user input.
 function Search(){
   const [query, setQuery] = useState("");
   return(
@@ -91,6 +94,7 @@ function Search(){
   );
 }
 
+// NumResults is a presentational component because it only displays the number of search results and does not manage any state or logic.
 function NumResults(){
   return(
     <p className="num-results">
@@ -99,6 +103,7 @@ function NumResults(){
   );
 }
 
+// Main is a structural component because it organizes and structures the layout of the main content area.
 function Main(){
   
   return(
@@ -109,7 +114,7 @@ function Main(){
   );
 }
 
-
+// ListBox is a stateful component because it manages the state of whether the movie list is open or closed and updates it based on user interaction.
 function ListBox(){
  
   const [isOpen1, setIsOpen1] = useState(true);
@@ -126,6 +131,7 @@ function ListBox(){
   );
 }
 
+// MovieList is a stateful component because it manages the state of the list of movies and updates it based on user interaction.
 function MovieList(){
    const [movies, setMovies] = useState(tempMovieData);
 
@@ -137,6 +143,8 @@ function MovieList(){
             </ul>
   );
 }
+
+// Movie is a presentational component because it only displays the details of a movie and does not manage any state or logic.
 function Movie({ movie }) {
   return(
     <li>
@@ -151,6 +159,7 @@ function Movie({ movie }) {
                 </li>
   );
 }
+// WatchedBox is a stateful component because it manages the state of whether the watched movie list is open or closed and updates it based on user interaction.
 function WatchedBox(){
   const [watched, setWatched] = useState(tempWatchedData);  
   const [isOpen2, setIsOpen2] = useState(true);
@@ -172,6 +181,7 @@ function WatchedBox(){
         </div> 
   );
 }
+// WatchedSummary is a presentational component because it only displays the summary of watched movies and does not manage any state or logic.
 function WatchedSummary({ watched }) {
   const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
   const avgUserRating = average(watched.map((movie) => movie.userRating));
@@ -200,7 +210,7 @@ function WatchedSummary({ watched }) {
               </div>
   );
 }
-
+// WatchedSummary is a presentational component because it only displays the summary of watched movies and does not manage any state or logic.
 function WatchedMovieList({ watched }) {
   return(
     <ul className="list">
@@ -210,7 +220,7 @@ function WatchedMovieList({ watched }) {
     </ul>
   );
 }
-
+// WatchedMovie is a presentational component because it only displays the details of a watched movie and does not manage any state or logic.
 function WatchedMovie({ movie }) {
   return(
     <li key={movie.imdbID}>
