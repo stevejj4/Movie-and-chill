@@ -52,21 +52,22 @@ const average = (arr) =>
 
 // App is a structural Components
 export default function App() {
+  const [movies, setMovies] = useState(tempMovieData);
 
   return (
     <>
-      <Navbar />
-      <Main />
+      <Navbar movies={movies} />
+      <Main movies={movies} />
     </>
   );
 }
 // Navbar is a structural Components
-function Navbar(){
+function Navbar({ movies }){
   return(
     <nav className="nav-bar">
         <Logo />
         <Search />
-        <NumResults />
+        <NumResults movies={movies} />
       </nav>
   );
 }
@@ -95,27 +96,27 @@ function Search(){
 }
 
 // NumResults is a presentational component because it only displays the number of search results and does not manage any state or logic.
-function NumResults(){
+function NumResults({ movies }){
   return(
     <p className="num-results">
-          Found <strong>X</strong> results
+          Found <strong>{movies.length}</strong> results
         </p>
   );
 }
 
 // Main is a structural component because it organizes and structures the layout of the main content area.
-function Main(){
+function Main({ movies }){
   
   return(
     <main className="main">
-        <ListBox />
+        <ListBox movies={movies} />
         <WatchedBox />
       </main>
   );
 }
 
 // ListBox is a stateful component because it manages the state of whether the movie list is open or closed and updates it based on user interaction.
-function ListBox(){
+function ListBox({ movies }){
  
   const [isOpen1, setIsOpen1] = useState(true);
   return(
@@ -126,14 +127,14 @@ function ListBox(){
           >
             {isOpen1 ? "–" : "+"}
           </button>
-          {isOpen1 && <MovieList />}
+          {isOpen1 && <MovieList movies={movies} />}
         </div>
   );
 }
 
 // MovieList is a stateful component because it manages the state of the list of movies and updates it based on user interaction.
-function MovieList(){
-   const [movies, setMovies] = useState(tempMovieData);
+function MovieList({ movies }){
+   
 
   return(
     <ul className="list">
