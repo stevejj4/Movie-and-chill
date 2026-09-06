@@ -53,21 +53,34 @@ const average = (arr) =>
 // App is a structural Components
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
+  const [watched, setWatched] = useState(tempWatchedData); 
 
   return (
     <>
-      <Navbar movies={movies} />
-      <Main movies={movies} />
+      <Navbar>
+        <Search />
+        <NumResults movies={movies} />
+      </Navbar>
+      <Main>
+        <Box>
+          <MovieList movies={movies} />
+        </Box>
+        <Box>
+           <WatchedSummary watched={watched} />
+          <WatchedMovieList watched={watched} />
+        </Box>
+        
+      </Main>
     </>
   );
 }
 // Navbar is a structural Components
-function Navbar({ movies }){
+function Navbar({ children }){
   return(
     <nav className="nav-bar">
         <Logo />
-        <Search />
-        <NumResults movies={movies} />
+      {children}
+        
       </nav>
   );
 }
@@ -105,33 +118,55 @@ function NumResults({ movies }){
 }
 
 // Main is a structural component because it organizes and structures the layout of the main content area.
-function Main({ movies }){
+function Main({ children }){
   
   return(
     <main className="main">
-        <ListBox movies={movies} />
-        <WatchedBox />
+        {children}
       </main>
   );
 }
 
 // ListBox is a stateful component because it manages the state of whether the movie list is open or closed and updates it based on user interaction.
-function ListBox({ movies }){
+function Box({ children }){
  
-  const [isOpen1, setIsOpen1] = useState(true);
+  const [isOpen, setIsOpen] = useState(true);
   return(
     <div className="box">
           <button
             className="btn-toggle"
-            onClick={() => setIsOpen1((open) => !open)}
+            onClick={() => setIsOpen((open) => !open)}
           >
-            {isOpen1 ? "–" : "+"}
+            {isOpen ? "–" : "+"}
           </button>
-          {isOpen1 && <MovieList movies={movies} />}
+          {isOpen && children}
         </div>
   );
 }
-
+/*
+// WatchedBox is a stateful component because it manages the state of whether the watched movie list is open or closed and updates it based on user interaction.
+function WatchedBox(){
+  const [watched, setWatched] = useState(tempWatchedData);  
+  const [isOpen2, setIsOpen2] = useState(true);
+  
+  return(
+    <div className="box">
+          <button
+            className="btn-toggle"
+            onClick={() => setIsOpen2((open) => !open)}
+          >
+            {isOpen2 ? "–" : "+"}
+          </button>
+          {isOpen2 && (
+            <>
+              <WatchedSummary watched={watched} />
+              <WatchedMovieList watched={watched} />
+            </>
+          )}
+        </div> 
+  );
+}
+*/
 // MovieList is a stateful component because it manages the state of the list of movies and updates it based on user interaction.
 function MovieList({ movies }){
    
@@ -160,28 +195,7 @@ function Movie({ movie }) {
                 </li>
   );
 }
-// WatchedBox is a stateful component because it manages the state of whether the watched movie list is open or closed and updates it based on user interaction.
-function WatchedBox(){
-  const [watched, setWatched] = useState(tempWatchedData);  
-  const [isOpen2, setIsOpen2] = useState(true);
-  
-  return(
-    <div className="box">
-          <button
-            className="btn-toggle"
-            onClick={() => setIsOpen2((open) => !open)}
-          >
-            {isOpen2 ? "–" : "+"}
-          </button>
-          {isOpen2 && (
-            <>
-              <WatchedSummary watched={watched} />
-              <WatchedMovieList watched={watched} />
-            </>
-          )}
-        </div> 
-  );
-}
+
 // WatchedSummary is a presentational component because it only displays the summary of watched movies and does not manage any state or logic.
 function WatchedSummary({ watched }) {
   const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
