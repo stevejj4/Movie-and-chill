@@ -54,13 +54,16 @@ const average = (arr) =>
 export default function App() {
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]); 
+  const [isLoading, setIsLoading] = useState(false);
   const query = "spiderman";
 
   useEffect(function() {
     async function fetchMovies() {
+      setIsLoading(true); // before it start
       const res = await fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=41ed519c&s=${query}`);
       const data = await res.json();
       setMovies(data.Search);
+      setIsLoading(false); // after it loads
       console.log(data.Search);
     }
     fetchMovies();
@@ -74,7 +77,7 @@ export default function App() {
       </Navbar>
       <Main>
         <Box>
-          <MovieList movies={movies} />
+          {isLoading ? <Loader /> : <MovieList movies={movies} />}
         </Box>
         <Box>
            <WatchedSummary watched={watched} />
@@ -84,6 +87,9 @@ export default function App() {
       </Main>
     </>
   );
+}
+function Loader() {
+  return <p className="loader">Loading...</p>;
 }
 // Navbar is a structural Components
 function Navbar({ children }){
