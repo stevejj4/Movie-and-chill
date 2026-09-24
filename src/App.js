@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const tempMovieData = [
   {
@@ -52,8 +52,14 @@ const average = (arr) =>
 
 // App is a structural Components
 export default function App() {
-  const [movies, setMovies] = useState(tempMovieData);
-  const [watched, setWatched] = useState(tempWatchedData); 
+  const [movies, setMovies] = useState([]);
+  const [watched, setWatched] = useState([]); 
+
+  useEffect(function() {
+    fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=41ed519c&s=spiderman`)
+      .then(res => res.json())
+      .then((data) => setMovies(data.Search));
+  }, []);
 
   return (
     <>
@@ -230,7 +236,7 @@ function WatchedMovieList({ watched }) {
   return(
     <ul className="list">
       {watched.map((movie) => (
-        <WatchedMovie movie={movie} />
+        <WatchedMovie movie={movie} key={movie.imdbID} />
       ))}
     </ul>
   );
@@ -238,7 +244,7 @@ function WatchedMovieList({ watched }) {
 // WatchedMovie is a presentational component because it only displays the details of a watched movie and does not manage any state or logic.
 function WatchedMovie({ movie }) {
   return(
-    <li key={movie.imdbID}>
+    <li>
           <img src={movie.Poster} alt={`${movie.Title} poster`} />
           <h3>{movie.Title}</h3>
           <div>
