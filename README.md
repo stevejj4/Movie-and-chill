@@ -396,14 +396,12 @@ The system will store interactions rather than retraining a model after every in
 
 ## Frontend / Application
 
-* **Next.js**
 * **React**
 * **TypeScript**
 * **Tailwind CSS**
 
-Next.js is used as the main web application framework.
+React is used as the main web application framework.
 
-The project can reuse and migrate components from the existing React frontend rather than rebuilding the interface from scratch.
 
 ---
 
